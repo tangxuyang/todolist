@@ -16,6 +16,11 @@
 			>
 			</el-table-column>
 			<el-table-column
+				prop="remark"
+				label="remark"
+			>
+			</el-table-column>
+			<el-table-column
 				prop="status"
 				label="status"
 			>
@@ -64,7 +69,7 @@
 		</el-dialog>
 
 		<el-dialog
-			title="新增"
+			title="编辑"
 			:visible.sync="modifyDialogVisible"
 			size="tiny">
 			<el-form :model="item" label-width="80px">
@@ -73,7 +78,10 @@
 				</el-form-item>
 				<el-form-item label="desc">
 					<el-input v-model="item.desc"></el-input>
-				</el-form-item>		
+				</el-form-item>	
+				<el-form-item label="remark">
+					<el-input v-model="item.remark"></el-input>
+				</el-form-item>	
 				<el-form-item label="status">
 					<el-input v-model="item.status"></el-input>
 				</el-form-item>	
@@ -99,7 +107,8 @@ export default {
 				_id:"",
 				title:"",
 				desc:"",
-				status:""
+				status:"",
+				remark:""
 			},
 			items:[]
 		};
@@ -120,7 +129,8 @@ export default {
 				_id:"",
 				title:"",
 				desc:"",
-				status:""
+				status:"",
+				remark:"",
 			}
 			this.addDialogVisible = true;
 		},

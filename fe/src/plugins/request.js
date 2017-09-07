@@ -6,8 +6,7 @@ export default {
 
 		methods.forEach(function(method){
 			Vue.request[method] = function(){
-				let _arguments = arguments;
-				console.log('...');
+				let _arguments = arguments;				
 				return new Promise(function(resolve,reject){
 					Vue.http[method].apply(Vue.http,_arguments).then(function(res){
 						resolve(res.body,res);
