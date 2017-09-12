@@ -325,7 +325,7 @@ export default {
 	          cancelButtonText: '取消',
 	          type: 'warning'
 	        }).then(() => {
-	          this.$request.delete(todolistUrl+item._id).then(function(data){
+	          this.$request.delete(todolistUrl+'/'+item._id).then(function(data){
 	          	if(data.status == 1){
 	          		self.$message({
 		              type: 'success',
