@@ -4,17 +4,35 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var url = 'mongodb://localhost:27018/todolist';
+//var url = 'mongodb://localhost:27018/todolist';
+var url = 'mongodb://localhost:27017/todolist';
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
+  let pageIndex = +(req.query.pageIndex || 0);
+  let pageSize = +(req.query.pageSize || 10);
+  let query = Object.assign({},req.query);
+  delete query.pageSize;
+  delete query.pageIndex;
+  //console.log(req.query);
+
+  console.log('pageIndex:',pageIndex,'pageSize:',pageSize);
   MongoClient.connect(url,function(err,db){
-  	db.collection('tasks').find({}).toArray(function(err,tasks){
-  		db.close();
-  		res.json({status:1,message:"success",data:tasks})  		
-  	});
+
+  	let tasks = db.collection('tasks').find(query);
+  	let total = 0;
+  	tasks.count(function(err,count){
+  		total = count;
+  		if(pageSize > 0){
+  		tasks = tasks.skip(pageIndex*pageSize).limit(pageSize);
+	  	}
+	  	tasks.toArray(function(err,tasks){
+	  		db.close();
+	  		res.json({status:1,message:"success",data:{tasks:tasks,total:total,pageIndex:pageIndex,pageSize:pageSize}})  		
+	  	});
+  	});  	
   });
 
   // MongoClient.connect(url,function(err,db){//1.连接数据库
