@@ -4,8 +4,8 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-//var url = 'mongodb://localhost:27018/todolist';
-var url = 'mongodb://localhost:27017/todolist';
+var url = 'mongodb://localhost:27018/todolist';
+//var url = 'mongodb://localhost:27017/todolist';
 
 
 /* GET home page. */
@@ -17,8 +17,6 @@ router.get('/', function(req, res, next) {
   delete query.pageSize;
   delete query.pageIndex;
   
-  
-  console.log('pageIndex:',pageIndex,'pageSize:',pageSize);
   MongoClient.connect(url,function(err,db){
 
   	let tasks = db.collection('tasks').find(query);
