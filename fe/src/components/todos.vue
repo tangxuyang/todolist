@@ -21,6 +21,15 @@
 				</template>
 			</el-table-column>
 			<el-table-column
+				label="标签"				
+			>
+				<template scope="scope">
+					<el-tag size="mini" :color="tagColors[index]" v-for="(tag,index) in scope.row.tags">
+						{{tag}}
+					</el-tag>
+				</template>
+			</el-table-column>
+			<el-table-column
 				pro
 				label="备注"
 			>
@@ -69,6 +78,21 @@
 				</el-form-item>
 				<el-form-item label="描述">
 					<UEditor id="add-desc" v-model="item.desc" :zindex="4000"></UEditor>
+				</el-form-item>
+				<el-form-item label="标签">
+					<el-select
+						v-model="item.tags"
+					    filterable
+					    allow-create
+					    multiple					    
+					    placeholder="请选择标签">
+					    <el-option
+					      v-for="tag in tags"
+					      :key="tag"
+					      :label="tag"
+					      :value="tag">
+					    </el-option>
+					 </el-select>
 				</el-form-item>		
 			</el-form>
 			<span slot="footer" class="dialog-footer">
@@ -84,6 +108,21 @@
 			<el-form :model="item" label-width="80px">
 				<el-form-item label="标题">
 					<el-input v-model="item.title"></el-input>
+				</el-form-item>
+				<el-form-item label="标签">
+					<el-select
+						v-model="item.tags"
+					    filterable
+					    allow-create
+					    multiple					    
+					    placeholder="请选择标签">
+					    <el-option
+					      v-for="tag in tags"
+					      :key="tag"
+					      :label="tag"
+					      :value="tag">
+					    </el-option>
+					 </el-select>
 				</el-form-item>
 				<el-form-item label="描述">
 				
@@ -154,6 +193,7 @@
 <script>
 import apiUrls from '@/configs/apis';
 let todolistUrl = apiUrls.todolist['default'];
+let tagUrl = apiUrls.tag['default'];
 
 import UEditor from '@/components/UEditor';
 
@@ -173,19 +213,29 @@ export default {
 				title:"",
 				desc:"",
 				status:"",
-				remark:""
+				remark:"",
+				tags:[]
 			},
 			items:[],
 			total:0,
 			pageSize:10,
 			pageIndex:1,
-			query: query
+			query: query,
+			tags:[],
+			values:[],
+			tagColors:['#aaa','#3c3c3c','#ccc','#cc3388']
 		};
 	},
 	mounted(){
-		 this.refresh();
+		 this.refresh();			 
 	},
 	methods:{
+		getAllTags(){
+			let self = this;
+			this.$request.get(tagUrl).then(function(data){		
+			 	self.tags = data.data || [];
+			 });			
+		},
 		generateQuery(){
 			let tmpObj = {};
 			if(this.query.length>0){
@@ -208,7 +258,13 @@ export default {
 			 this.$request.get(todolistUrl,{
 			 	params:params
 			 }).then(function(data){		
-			 	self.items = data.data.tasks;
+			 	self.items = data.data.tasks.map(function(task){
+			 		if(!task.tags){
+			 			task.tags = [];
+			 		}
+
+			 		return task;
+			 	});
 			 	self.total = data.data.total;
 			 });
 		},
@@ -219,8 +275,10 @@ export default {
 				desc:"",
 				status:"",
 				remark:"",
+				tags:[]
 			}
 			this.addDialogVisible = true;
+			this.getAllTags();
 		},
 		addItemConfirm(){
 			this.item.status="没开始";
@@ -239,6 +297,7 @@ export default {
 		modifyItem(item){
 			this.item = Object.assign({},item);
 			this.modifyDialogVisible = true;
+			this.getAllTags();
 		},
 		modifyItemConfirm(){			
 			let self = this;

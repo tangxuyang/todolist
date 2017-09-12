@@ -16,8 +16,8 @@ router.get('/', function(req, res, next) {
   let query = Object.assign({},req.query);
   delete query.pageSize;
   delete query.pageIndex;
-  //console.log(req.query);
-
+  
+  
   console.log('pageIndex:',pageIndex,'pageSize:',pageSize);
   MongoClient.connect(url,function(err,db){
 

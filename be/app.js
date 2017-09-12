@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var tags = require('./routes/tags');
 var cors = require('cors');
 
 var app = express();
@@ -35,6 +36,7 @@ app.use(function(req,res,next){
 
 app.use('/todo', index);
 app.use('/users', users);
+app.use('/tags',tags);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
