@@ -1,5 +1,5 @@
-//let domain = "http://www.tangxuyang.cn/todolistapi";
-let domain = "http://localhost:8088"
+let domain = "http://www.tangxuyang.cn/todolistapi";
+//let domain = "http://localhost:8088"
 
 export default {
 	"todolist":{
