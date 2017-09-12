@@ -7,5 +7,8 @@ export default {
 	},
 	"todo":{
 		default:domain + "/todo"
+	},
+	"ueditor":{
+		default:domain + "/ueditor"
 	}
 };
