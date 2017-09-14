@@ -7336,7 +7336,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          * editor.setContent('<p>new text</p>', true); //插入的结果是<p>old text</p><p>new text</p>
          * ```
          */
-        setContent: function (html, isAppendTo, notFireSelectionchange) {
+        setContent: function (html, isAppendTo, notFireSelectionchange, notFireContentChanged) {
             var me = this;
 
             me.fireEvent('beforesetcontent', html);
@@ -7383,7 +7383,7 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
                 }
             }
             me.fireEvent('aftersetcontent');
-            me.fireEvent('contentchange');
+            !notFireContentChanged && me.fireEvent('contentchange');
 
             !notFireSelectionchange && me._selectionChange();
             //清除保存的选区

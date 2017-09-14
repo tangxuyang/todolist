@@ -4,8 +4,8 @@ var router = express.Router();
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var url = 'mongodb://localhost:27018/todolist';
-//var url = 'mongodb://localhost:27017/todolist';
+//var url = 'mongodb://localhost:27018/todolist';
+var url = 'mongodb://localhost:27017/todolist';
 
 
 /* GET home page. */

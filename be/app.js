@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var tags = require('./routes/tags');
 var cors = require('cors');
+var auth = require('./middlewares/authentication');
 
 var app = express();
 
@@ -26,17 +27,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function(req,res,next){
-	if(req.headers["token"] === "txy"){
-		next();
-	}else{
-		res.json({status:0,message:"无权操作！"});
-	}
-});
+// app.use(function(req,res,next){
+// 	if(req.headers["token"] === "txy"){
+// 		next();
+// 	}else{
+// 		res.json({status:0,message:"无权操作！"});
+// 	}
+// });
+//app.use(auth);
 
-app.use('/todo', index);
+app.use('/todo', auth, index);
 app.use('/users', users);
-app.use('/tags',tags);
+app.use('/tags', auth, tags);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

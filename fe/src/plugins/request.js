@@ -9,7 +9,11 @@ export default {
 				let _arguments = arguments;				
 				return new Promise(function(resolve,reject){
 					Vue.http[method].apply(Vue.http,_arguments).then(function(res){
-						resolve(res.body,res);
+						if(res.body.status == 1100){//未登录
+
+						}else{
+							resolve(res.body,res);
+						}
 					},function(res){
 						reject(res);
 					})
@@ -18,13 +22,12 @@ export default {
 		});
 
 		Vue.http.interceptors.push(function(req,next){
-			let token = window.localStorage['token'] || 'token'; 
+			let token = window.localStorage['token'] || ''; 
 			req.headers.set('token',token);
-
+			req.headers.set('X-Requested-With','XMLHttpRequest');
 			next();
 		});
 		/*
-
 		taken from vue-resource document
 		get(url, [options])
 		head(url, [options])
