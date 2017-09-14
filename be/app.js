@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var tags = require('./routes/tags');
+var login = require('./routes/login');
 var cors = require('cors');
 var auth = require('./middlewares/authentication');
 
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/todo', auth, index);
 app.use('/users', users);
+app.use('/login', login);
 app.use('/tags', auth, tags);
 
 // catch 404 and forward to error handler

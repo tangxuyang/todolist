@@ -2,12 +2,26 @@
   <div id="app">   
     <h1>任务列表</h1> 
     <router-view></router-view>
+    <Login ref="login"/>
   </div>
 </template>
 
 <script>
+import Login from '@/components/userLogin';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+    Login:Login
+  },
+  methods:{
+    login(){
+      this.$refs.login.visible = true;
+    }
+  },
+  created(){
+    window.appRoot = this;
+  }
 }
 </script>
 

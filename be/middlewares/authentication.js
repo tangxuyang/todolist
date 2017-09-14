@@ -54,7 +54,7 @@ module.exports = function(req,res,next){
 
 		let clearText = strs.join('|');
 		let cipher = crypto.createCipher('aes192',password);
-		let encrypted = cipher.update('clearText','utf8','base64');
+		let encrypted = cipher.update(clearText,'utf8','base64');
 		encrypted += cipher.final('base64');
 
 		res.set(headerName,encrypted);

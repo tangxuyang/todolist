@@ -15,9 +15,9 @@ Vue.use(VueResource);
 Vue.use(Request);
 
 /* eslint-disable no-new */
-new Vue({
+window.vueRoot = new Vue({
   el: '#app',
   router,
   template: '<App/>',
   components: { App }
-})
+});

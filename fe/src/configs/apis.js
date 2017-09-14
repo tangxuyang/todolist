@@ -13,5 +13,8 @@ export default {
 	},
 	"tag":{
 		default:domain+"/tags"
+	},
+	"login":{
+		default:domain+"/login"
 	}
 };
