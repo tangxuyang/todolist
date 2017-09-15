@@ -27,15 +27,18 @@ export default {
 		};
 	},
 	methods:{
+
 		login(){			
+			let self = this;
 			this.$request.get(loginUrl,{
 				params:{
 					userName:this.userName,
 					password:this.password
 				}
-			}).then(function(data){		
-			 	console.log(data);
-
+			}).then(function(data){					 	
+			 	self.visible = false;			 	
+			},function(){
+				self.$message.error('登录失败，请重试！');
 			});
 		}
 	}

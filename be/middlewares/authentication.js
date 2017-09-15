@@ -26,6 +26,7 @@ function handleUnauthenticated(req,res){
 module.exports = function(req,res,next){
 
 	let header = req.get(headerName);
+	console.log('token:',header);
 	if(!header){//未登录
 		handleUnauthenticated(req,res);
 		return;
@@ -35,8 +36,10 @@ module.exports = function(req,res,next){
 		let decipher = crypto.createDecipher('aes192',password);
 
 		let decrypted = decipher.update(header,'base64','utf8');
+		console.log('header....',header);
+		console.log('decrypted...',decrypted);
 		decrypted += decipher.final('utf8');
-
+		console.log('decrypted:',decrypted);
 		let strs = decrypted.split('|');
 		if(strs.length != 3 || strs[1] != middle){
 			handleUnauthenticated(req,res);
@@ -45,6 +48,7 @@ module.exports = function(req,res,next){
 
 		let lastTime = new Date(parseInt(strs[2]));
 		let now = new Date();
+		console.log(now-lastTime);
 		if(now-lastTime>timeout){//超时
 			handleUnauthenticated(req,res);
 			return;
@@ -58,8 +62,9 @@ module.exports = function(req,res,next){
 		encrypted += cipher.final('base64');
 
 		res.set(headerName,encrypted);
+		next();
 	}catch(ex){
+		console.log(ex);
 		handleUnauthenticated(req,res);
-	}
-	next();
+	}	
 };

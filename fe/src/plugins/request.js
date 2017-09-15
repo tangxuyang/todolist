@@ -8,7 +8,9 @@ export default {
 
 		function updateToken(res){
 			let token = res && res.headers && res.headers.get('token');
-			window.token = token;
+			console.log('token',token);
+			console.log('res',res.headers.get('token'));
+			window.localStorage.token = token;
 		}
 
 		methods.forEach(function(method){
@@ -28,13 +30,15 @@ export default {
 				// });
 
 				return new Vue.Promise(function(resolve,reject){
-					Vue.http[method].apply(Vue.http,_arguments).then(function(res){						
+					Vue.http[method].apply(Vue.http,_arguments).then(function(res){									
 						updateToken(res);
-						if(res.body.status == 1100){//未登录
+						if(res.body.status == 1){
+							resolve(res.body,res);
+						}else if(res.body.status == 1100){//未登录
 							window.vueRoot && window.vueRoot.$children[0].login();
 							reject(res);							
 						}else{
-							resolve(res.body,res);
+							reject(res);
 						}
 					},function(res){
 						updateToken(res);						
