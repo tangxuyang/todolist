@@ -228,7 +228,7 @@ export default {
 		};
 	},
 	mounted(){
-		 this.query = this.$refs.qd.getQuery();
+		 this.query = this.$refs.qd.generateQuery();
 		 this.refresh();			 
 	},
 	methods:{

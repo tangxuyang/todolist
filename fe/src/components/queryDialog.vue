@@ -59,8 +59,7 @@
 	export default {
 		name:"queryDialog",
 		//props:["visible"],
-		data(){
-			console.log('query ... dialog...');
+		data(){			
 			let query = this.getQuery();
 			return {
 				query:query,
