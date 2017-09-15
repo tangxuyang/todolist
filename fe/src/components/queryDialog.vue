@@ -7,6 +7,13 @@
 		<el-button type="primary" size="small" @click="addQuery">新增查询条件</el-button><br/><br/>
 		<el-table :data="query">
 			<el-table-column
+			label="enabled"				
+			>
+				<template scope="scope">
+					<el-checkbox v-model="scope.row.enabled"> </el-checkbox>
+				</template>				
+			</el-table-column>
+			<el-table-column
 			label="字段"
 			>
 				<template scope="scope">
@@ -53,6 +60,7 @@
 		name:"queryDialog",
 		//props:["visible"],
 		data(){
+			console.log('query ... dialog...');
 			let query = this.getQuery();
 			return {
 				query:query,
@@ -66,7 +74,9 @@
 			generateQuery(){
 				let tmpObj = {};
 				if(this.query.length>0){
-					this.query.forEach(function(q){
+					this.query.filter(function(q){
+						return !!q.enabled;
+					}).forEach(function(q){
 						switch(q.operator){
 							case '!=':
 								tmpObj[q.field] = {
