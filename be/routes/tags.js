@@ -10,8 +10,7 @@ var url = config.mongodb;
 router.get('/', function(req, res, next) {
   	MongoClient.connect(url,function(err,db){
 
-	 db.collection('tasks').distinct('tags',function(err,tags){
-
+	 db.collection('tasks').distinct('tags',{userId:req.userInfo.id},function(err,tags){
 	  		db.close();
 	  		res.json({status:1,message:"success",data:tags});
 	  	});		  	

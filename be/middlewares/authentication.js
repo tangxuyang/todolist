@@ -25,8 +25,7 @@ function handleUnauthenticated(req,res){
 
 module.exports = function(req,res,next){
 
-	let header = req.get(headerName);
-	console.log('token:',header);
+	let header = req.get(headerName);	
 	if(!header){//未登录
 		handleUnauthenticated(req,res);
 		return;
@@ -36,10 +35,8 @@ module.exports = function(req,res,next){
 		let decipher = crypto.createDecipher('aes192',password);
 
 		let decrypted = decipher.update(header,'base64','utf8');
-		console.log('header....',header);
-		console.log('decrypted...',decrypted);
-		decrypted += decipher.final('utf8');
-		console.log('decrypted:',decrypted);
+
+		decrypted += decipher.final('utf8');		
 		let strs = decrypted.split('|');
 		if(strs.length != 3 || strs[1] != middle){
 			handleUnauthenticated(req,res);
@@ -60,11 +57,12 @@ module.exports = function(req,res,next){
 		let cipher = crypto.createCipher('aes192',password);
 		let encrypted = cipher.update(clearText,'utf8','base64');
 		encrypted += cipher.final('base64');
-
+		req.userInfo = {
+			id: strs[0]
+		};
 		res.set(headerName,encrypted);
 		next();
-	}catch(ex){
-		console.log(ex);
+	}catch(ex){		
 		handleUnauthenticated(req,res);
 	}	
 };

@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
   let pageIndex = +(req.query.pageIndex || 0);
   let pageSize = +(req.query.pageSize || 10);
-  let query = Object.assign({},req.query);
+  let query = Object.assign({userId:req.userInfo.id},req.query);
   delete query.pageSize;
   delete query.pageIndex;
   
@@ -89,7 +89,7 @@ router.get('/:id',function(req,res,next){
 	let id = new MongoClient.connect.ObjectID(req.params.id);
 	MongoClient.connect(url,function(err,db){
 		//console.log(MongoClient.connect.ObjectID);
-		db.collection('tasks').findOne({_id:id}).then(function(task){
+		db.collection('tasks').findOne({_id:id,userId:req.userInfo.id}).then(function(task){
 
 			//console.log(task);
 
@@ -110,6 +110,7 @@ router.post('/',function(req,res,next){
 	//console.log(req.params);
 	//console.log(req.query);
 	let data = req.body;
+	data.userId = req.userInfo.id;
 	delete data._id;
 	MongoClient.connect(url,function(err,db){//1.连接数据库
 
@@ -117,9 +118,8 @@ router.post('/',function(req,res,next){
 
 
 	//2.查找相同title
-	db.collection('tasks').findOne({title:data.title},{_id:0}).then(function(result){
-		if(!!result){
-			// console.log(result);
+	db.collection('tasks').findOne({title:data.title,userId:req.userInfo.id},{_id:0}).then(function(result){
+		if(!!result){			
 			res.json({status:0,message:data.title+" 已经存在了！"});
 			db.close();
 		}else{
@@ -144,7 +144,7 @@ router.put('/',function(req,res,next){
 	let id = new MongoClient.connect.ObjectID(data._id);
 	delete data._id;
 	MongoClient.connect(url,function(err,db){//1.连接数据库
-		db.collection('tasks').updateOne({_id:id},data).then(function(){
+		db.collection('tasks').updateOne({_id:id,userId:req.userInfo.id},data).then(function(){
 			db.close();
 			res.json({status:1,message:"success"});			
 		}).catch(function(){
@@ -158,7 +158,7 @@ router.put('/',function(req,res,next){
 router.delete('/:id',function(req,res,next){
 	let id = new MongoClient.connect.ObjectID(req.params.id);
 	MongoClient.connect(url,function(err,db){
-		db.collection('tasks').remove({_id:id}).then(function(){
+		db.collection('tasks').remove({_id:id,userId:req.userInfo.id}).then(function(){
 			db.close();
 			res.json({status:1,message:"success"});
 		}).catch(function(){
