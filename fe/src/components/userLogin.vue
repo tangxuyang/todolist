@@ -5,7 +5,7 @@
 				<el-input v-model="userName"/>
 			</el-form-item>
 			<el-form-item label="密码">
-				<el-input v-model="password"/>
+				<el-input v-model="password" type="password"/>
 			</el-form-item>
 		</el-form>
 		<span slot="footer" class="dialog-footer">		    
@@ -36,9 +36,12 @@ export default {
 					password:this.password
 				}
 			}).then(function(data){					 	
-			 	self.visible = false;			 	
+			 	self.visible = false;	
+			 	self.userName = "";
+			 	self.password = "";		 	
 			},function(){
 				self.$message.error('登录失败，请重试！');
+				self.password = "";
 			});
 		}
 	}
