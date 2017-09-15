@@ -57,8 +57,7 @@
 <script type="text/javascript">
 	
 	export default {
-		name:"queryDialog",
-		//props:["visible"],
+		name:"queryDialog",		
 		data(){			
 			let query = this.getQuery();
 			return {

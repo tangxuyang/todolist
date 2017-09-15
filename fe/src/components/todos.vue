@@ -140,54 +140,7 @@
 			    <el-button @click="modifyDialogVisible = false">取 消</el-button>
 			    <el-button type="primary" @click="modifyItemConfirm">确 定</el-button>
 			</span>					
-		</el-dialog>			
-		<!-- <el-dialog
-			title="设置查询条件"
-			:visible.sync="queryDialogVisible"
-			size="small"
-		>
-			<el-button type="primary" size="small" @click="addQuery">新增查询条件</el-button><br/><br/>
-			<el-table :data="query">
-				<el-table-column
-				label="字段"
-				>
-					<template scope="scope">
-						<el-input v-model="scope.row.field"></el-input>
-					</template>
-				</el-table-column>
-				<el-table-column 
-				label="操作符"
-				>
-					<template scope="scope">
-						<el-select v-model="scope.row.operator" placeholder="请选择">
-						    <el-option
-						      v-for="item in ['=','!=']"
-						      :key="item"
-						      :label="item"
-						      :value="item">
-						    </el-option>
-						  </el-select>
-					</template>
-				</el-table-column>
-				<el-table-column
-					label="值"
-				>
-					<template scope="scope">
-						<el-input v-model="scope.row.value"></el-input>
-					</template>
-				</el-table-column>
-				<el-table-column					
-					label="操作"
-				>
-					<template scope="scope">
-						<el-button type="danger" size="small" @click="removeQuery(scope.row)">删除</el-button>
-					</template>
-				</el-table-column>
-			</el-table>
-			<span slot="footer" class="dialog-footer">			    
-			    <el-button type="primary" @click="handleSetQuery">确 定</el-button>
-			</span>	
-		</el-dialog> -->
+		</el-dialog>					
 		<QueryDialog ref="qd" @queryChanged="queryChanged" />
 	</div>
 </template>
@@ -237,25 +190,9 @@ export default {
 			this.$request.get(tagUrl).then(function(data){		
 			 	self.tags = data.data || [];
 			 });			
-		},
-		// generateQuery(){
-		// 	let tmpObj = {};
-		// 	if(this.query.length>0){
-		// 		this.query.forEach(function(q){
-		// 			if(q.operator=='!='){//不等
-		// 				tmpObj[q.field] = {
-		// 					'$ne':q.value};
-		// 			}else{//相等
-		// 				tmpObj[q.field] = q.value;
-		// 			}					
-		// 		});
-		// 	}
-
-		// 	return tmpObj;
-		// },
+		},		
 		refresh(pageIndex){
-			let self = this;
-			//let tmpObj = this.generateQuery();
+			let self = this;		
 			let tmpObj = this.query;
 			let params = Object.assign({},{pageIndex: self.pageIndex - 1},tmpObj);
 			 this.$request.get(todolistUrl,{
@@ -343,30 +280,15 @@ export default {
 		handleCurrentChange(){
 			this.refresh();
 		},
-		setQuery(){
-			//this.queryDialogVisible = true;
+		setQuery(){			
 			this.$refs.qd.show();
 		},
 		queryChanged(query){
 			this.query = query;
 			this.refresh();
-		}
-		// addQuery(){
-		// 	this.query.push({field:"",value:"",operator:""});
-		// },
-		// removeQuery(q){
-		// 	let index = this.query.indexOf(q);
-		// 	this.query.splice(index,1);			
-		// },
-		// handleSetQuery(){
-		// 	localStorage.query = JSON.stringify(this.query);
-		// 	this.refresh();
-		// 	this.queryDialogVisible=false
-		// }
+		}		
 	}
 }
 </script>
-
 <style>
-
 </style>
