@@ -15,8 +15,9 @@ export default {
     Login:Login
   },
   methods:{
-    login(){
+    login(cb){
       this.$refs.login.visible = true;
+      this.$refs.login.successCb = cb;
     }
   },
   created(){
