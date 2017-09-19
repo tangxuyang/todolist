@@ -7,37 +7,25 @@ export default {
 		let methods = ['get','head','delete','jsonp','post','put','patch'];
 
 		function updateToken(res){
-			let token = res && res.headers && res.headers.get('token');
-			console.log('token',token);
-			console.log('res',res.headers.get('token'));
+			let token = res && res.headers && res.headers.get('token');			
 			window.localStorage.token = token;
 		}
 
 		methods.forEach(function(method){
 			Vue.request[method] = function(){
 				let _arguments = arguments;				
-				// return new Promise(function(resolve,reject){
-				// 	Vue.http[method].apply(Vue.http,_arguments).then(function(res){
-				// 		if(res.body.status == 1100){//未登录
-				// 			window.vueRoot && window.vueRoot.login();
-				// 			reject(res);
-				// 		}else{
-				// 			resolve(res.body,res);
-				// 		}
-				// 	},function(res){
-				// 		reject(res);
-				// 	})
-				// });
 
 				return new Vue.Promise(function(resolve,reject){
 					Vue.http[method].apply(Vue.http,_arguments).then(function(res){									
 						updateToken(res);
-						if(res.body.status == 1){
+						if(res.body.status == 1){//成功
 							resolve(res.body,res);
 						}else if(res.body.status == 1100){//未登录
-							window.vueRoot && window.vueRoot.$children[0].login();
+							window.vueRoot && window.vueRoot.$children[0].login(function(){
+								Vue.request[method].apply(Vue,_arguments);//重试之前的请求
+							});
 							reject(res);							
-						}else{
+						}else{//失败
 							reject(res);
 						}
 					},function(res){

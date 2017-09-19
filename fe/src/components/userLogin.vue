@@ -28,7 +28,7 @@ export default {
 	},
 	methods:{
 
-		login(){			
+		login(cb){			
 			let self = this;
 			this.$request.get(loginUrl,{
 				params:{
@@ -38,7 +38,9 @@ export default {
 			}).then(function(data){					 	
 			 	self.visible = false;	
 			 	self.userName = "";
-			 	self.password = "";		 	
+			 	self.password = "";		
+
+			 	cb && cb(); 	
 			},function(){
 				self.$message.error('登录失败，请重试！');
 				self.password = "";
