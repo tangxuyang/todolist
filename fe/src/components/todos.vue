@@ -151,6 +151,9 @@ let tagUrl = apiUrls.tag['default'];
 
 import UEditor from '@/components/UEditor';
 import QueryDialog from '@/components/queryDialog';
+import Todo from '@/models/Todo';
+import TodoList from '@/models/TodoList';
+
 
 export default {
 	name:"todos",
@@ -180,6 +183,9 @@ export default {
 			tagColors:['#aaa','#3c3c3c','#ccc','#cc3388']
 		};
 	},
+	created(){
+		this.todoList = new TodoList(todolistUrl);
+	},
 	mounted(){
 		 this.query = this.$refs.qd.generateQuery();
 		 this.refresh();			 
@@ -194,10 +200,9 @@ export default {
 		refresh(pageIndex){
 			let self = this;		
 			let tmpObj = this.query;
-			let params = Object.assign({},{pageIndex: self.pageIndex - 1},tmpObj);
-			 this.$request.get(todolistUrl,{
-			 	params:params
-			 }).then(function(data){		
+			let params = Object.assign({},{pageIndex: self.pageIndex - 1},tmpObj);			
+			this.todoList.getTodoes(params)
+			.then(function(data){		
 			 	self.items = data.data.tasks.map(function(task){
 			 		if(!task.tags){
 			 			task.tags = [];
@@ -208,22 +213,15 @@ export default {
 			 	self.total = data.data.total;
 			 });
 		},
-		addItem(){
-			this.item = {
-				_id:"",
-				title:"",
-				desc:"",
-				status:"",
-				remark:"",
-				tags:[]
-			}
+		addItem(){			
+			this.item = new Todo();
 			this.addDialogVisible = true;
 			this.getAllTags();
 		},
 		addItemConfirm(){
 			this.item.status="没开始";
-			let self = this;
-			this.$request.post(todolistUrl,this.item).then(function(data){
+			let self = this;			
+			this.todoList.addTodo(this.item).then(function(data){
 				if(data.status == 1){
 					self.$message('添加成功！');
 					self.addDialogVisible = false;
@@ -240,8 +238,8 @@ export default {
 			this.getAllTags();
 		},
 		modifyItemConfirm(){			
-			let self = this;
-			this.$request.put(todolistUrl,this.item).then(function(data){
+			let self = this;			
+			this.todoList.modifyTodo(this.item).then(function(data){
 				if(data.status == 1){
 					self.$message('修改成功！');
 					self.modifyDialogVisible = false;
@@ -264,8 +262,8 @@ export default {
 	          confirmButtonText: '确定',
 	          cancelButtonText: '取消',
 	          type: 'warning'
-	        }).then(() => {
-	          this.$request.delete(todolistUrl+'/'+item._id).then(function(data){
+	        }).then(() => {	          
+	          this.todoList.deleteTodo(item._id).then(function(data){
 	          	if(data.status == 1){
 	          		self.$message({
 		              type: 'success',
