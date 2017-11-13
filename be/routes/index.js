@@ -14,6 +14,16 @@ router.get('/', function(req, res, next) {
 
   let pageIndex = +(req.query.pageIndex || 0);
   let pageSize = +(req.query.pageSize || 10);
+  let regExpObj = {};
+  if(req.query){ // 抽出$like
+	  for(let key in req.query){
+		  if(req.query[key]['$like']){
+			  regExpObj[key] = new RegExp(regExpObj[key]['$like']);
+			  delete req.query[key];
+		  }
+	  }
+  }
+  
   let query = Object.assign({userId:req.userInfo.id},req.query);
   delete query.pageSize;
   delete query.pageIndex;

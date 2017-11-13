@@ -26,7 +26,7 @@
 				<template scope="scope">
 					<el-select v-model="scope.row.operator" placeholder="请选择">
 					    <el-option
-					      v-for="item in ['=','!=','in','not in']"
+					      v-for="item in ['=','!=','in','not in','like']"
 					      :key="item"
 					      :label="item"
 					      :value="item">
@@ -94,6 +94,9 @@
 								if(tmpArr2.length>0){
 									tmpObj[q.field] = {$nin: tmpArr2};
 								}
+							break;
+							case 'like':
+								tmpObj[q.field] = {$like: q.value};
 							break;
 							default:
 
