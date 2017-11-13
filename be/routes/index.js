@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
   if(req.query){ // 抽出$like
 	  for(let key in req.query){
 		  if(req.query[key]['$like']){
-			  regExpObj[key] = new RegExp(regExpObj[key]['$like']);
+			  regExpObj[key] = new RegExp(req.query[key]['$like']);
 			  delete req.query[key];
 		  }
 	  }
