@@ -22,9 +22,7 @@ router.get('/', function(req, res, next) {
 			  delete req.query[key];
 		  }
 	  }
-  }
-
-  console.log(regExpObj);  
+  }  
   
   let query = Object.assign({userId:req.userInfo.id},req.query,regExpObj);
   delete query.pageSize;
