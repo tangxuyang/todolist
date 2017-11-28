@@ -18,13 +18,15 @@ router.get('/', function(req, res, next) {
   if(req.query){ // 抽出$like
 	  for(let key in req.query){
 		  if(req.query[key]['$like']){
-			  regExpObj[key] = new RegExp(req.query[key]['$like']);
+			  regExpObj[key] = new RegExp(req.query[key]['$like'],'i');
 			  delete req.query[key];
 		  }
 	  }
   }
+
+  console.log(regExpObj);  
   
-  let query = Object.assign({userId:req.userInfo.id},req.query);
+  let query = Object.assign({userId:req.userInfo.id},req.query,regExpObj);
   delete query.pageSize;
   delete query.pageIndex;
   
