@@ -5,18 +5,17 @@
 		<el-table :data="items" class="todo-list">
 			<el-table-column 
 				type="index"
-				width="1"
+				:min-width="tableMinWidth"
 			>
 			</el-table-column>
 			<el-table-column
 				prop="title"
 				label="标题"
-				width="1"
+				:min-width="tableMinWidth"
 			></el-table-column>
-			<el-table-column
-				
+			<el-table-column				
 				label="描述"
-				width="1"
+				:min-width="tableMinWidth"
 			>
 				<template scope="scope">
 					<div v-html="scope.row.desc">
@@ -25,7 +24,7 @@
 			</el-table-column>
 			<el-table-column
 				label="标签"
-				width="1"				
+				:min-width="tableMinWidth"				
 			>
 				<template scope="scope">
 					<el-tag size="mini" :color="tagColors[index]" v-for="(tag,index) in scope.row.tags">
@@ -36,7 +35,7 @@
 			<el-table-column
 				pro
 				label="备注"
-				width="1"
+				:min-width="tableMinWidth"
 			>
 				<template scope="scope">
 					<div v-html="scope.row.remark">
@@ -46,7 +45,7 @@
 			<el-table-column
 				prop="status"
 				label="状态"
-				width="1"
+				:min-width="tableMinWidth"
 			>
 			</el-table-column>
 			<el-table-column label="操作">
@@ -186,7 +185,8 @@ export default {
 			query: [],
 			tags:[],
 			values:[],
-			tagColors:['#aaa','#3c3c3c','#ccc','#cc3388']
+			tagColors:['#aaa','#3c3c3c','#ccc','#cc3388'],
+			tableMinWidth: window.innerWidth > 900 ? '' : '1'
 		};
 	},
 	created(){

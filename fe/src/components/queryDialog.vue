@@ -8,7 +8,7 @@
 		<el-table :data="query" class="query-table">
 			<el-table-column
 			label="enabled"		
-			width="1"		
+			:min-width="tableMinWidth"		
 			>
 				<template scope="scope">
 					<el-checkbox v-model="scope.row.enabled"> </el-checkbox>
@@ -16,7 +16,7 @@
 			</el-table-column>
 			<el-table-column
 			label="字段"
-			width="1"		
+			:min-width="tableMinWidth"	
 			>
 				<template scope="scope">
 					<el-input v-model="scope.row.field"></el-input>
@@ -24,7 +24,7 @@
 			</el-table-column>
 			<el-table-column 
 			label="操作符"
-			width="1"		
+			:min-width="tableMinWidth"		
 			>
 				<template scope="scope">
 					<el-select v-model="scope.row.operator" placeholder="请选择">
@@ -39,15 +39,14 @@
 			</el-table-column>
 			<el-table-column
 				label="值"
-				width="1"		
+				:min-width="tableMinWidth"		
 			>
 				<template scope="scope">
 					<el-input v-model="scope.row.value"></el-input>
 				</template>
 			</el-table-column>
 			<el-table-column					
-				label="操作"
-					
+				label="操作"					
 			>
 				<template scope="scope">
 					<el-button type="danger" size="small" @click="removeQuery(scope.row)">删除</el-button>
@@ -66,7 +65,8 @@ export default {
     let query = this.getQuery();
     return {
       query: query,
-      visible: false
+	  visible: false,
+	  tableMinWidth: window.innerWidth > 900 ? '' : '1'
     };
   },
   methods: {
