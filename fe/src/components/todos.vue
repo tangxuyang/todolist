@@ -325,6 +325,7 @@ export default {
 						> div {
 							width: 100%;
 							margin-left: 60px;
+							overflow: auto;
 						}
 
 						&::before {
