@@ -288,5 +288,73 @@ export default {
 	}
 }
 </script>
-<style>
+<style lang="less">
+	@media screen and (max-width: 900px) {
+		.el-table {
+			.el-table__header-wrapper {
+				display: none;
+			}
+			.el-table__body-wrapper {
+				colgroup {
+					display: none;
+				}
+				tbody {
+					width: 100%;
+					tr {
+						display: block;
+						width: 100%;
+						border-top: 2px solid green;
+					}
+					td{
+						position: relative;
+						height: auto;
+						width: 100%;
+						padding: 6px 0;
+						
+						display: flex;
+						align-items: center;
+						> div {
+							margin-left: 60px;
+						}
+
+						&::before {
+							position: absolute;
+							font-weight: bold;
+							margin-left: 10px;							
+							display: block;
+							float: left;
+							width: 60px;
+						}
+						&:nth-child(1)::before {
+							content: "序号";							
+						}
+						&:nth-child(2)::before {
+							content: "标题";							
+						}
+						&:nth-child(3)::before {
+							content: "描述";							
+						}
+						&:nth-child(4)::before {
+							content: "标签";							
+						}
+						&:nth-child(5)::before {
+							content: "备注";							
+						}
+						&:nth-child(6)::before {
+							content: "状态";							
+						}
+						&:nth-child(7)::before {
+							content: "操作";							
+						}
+
+						.cell > div:empty {
+							&:before {
+								content: '--';								
+							}							
+						}
+					} 
+				}
+			}
+		}
+	}
 </style>
