@@ -2,7 +2,7 @@
 	<div>
 		<el-button type="primary" @click="addItem">新增任务</el-button>
 		<el-button type="warning" @click="setQuery">设置查询条件</el-button><br/><br/>
-		<el-table :data="items">
+		<el-table :data="items" class="todo-list">
 			<el-table-column 
 				type="index"
 				width="1"
@@ -304,6 +304,9 @@ export default {
 				colgroup {
 					display: none;
 				}
+				table {
+					width: 100%;
+				}
 				tbody {
 					width: 100% !important;
 					tr {
@@ -320,6 +323,7 @@ export default {
 						display: flex;
 						align-items: center;
 						> div {
+							width: 100%;
 							margin-left: 60px;
 						}
 
@@ -330,28 +334,7 @@ export default {
 							display: block;
 							float: left;
 							width: 60px;
-						}
-						&:nth-child(1)::before {
-							content: "序号";							
-						}
-						&:nth-child(2)::before {
-							content: "标题";							
-						}
-						&:nth-child(3)::before {
-							content: "描述";							
-						}
-						&:nth-child(4)::before {
-							content: "标签";							
-						}
-						&:nth-child(5)::before {
-							content: "备注";							
-						}
-						&:nth-child(6)::before {
-							content: "状态";							
-						}
-						&:nth-child(7)::before {
-							content: "操作";							
-						}
+						}						
 
 						.cell > div:empty {
 							&:before {
@@ -362,5 +345,39 @@ export default {
 				}
 			}
 		}
+
+		.todo-list {			
+			.el-table__body-wrapper {								
+					tbody {
+						td {
+							&:nth-child(1)::before {
+								content: "序号";							
+							}
+							&:nth-child(2)::before {
+								content: "标题";							
+							}
+							&:nth-child(3)::before {
+								content: "描述";							
+							}
+							&:nth-child(4)::before {
+								content: "标签";							
+							}
+							&:nth-child(5)::before {
+								content: "备注";							
+							}
+							&:nth-child(6)::before {
+								content: "状态";							
+							}
+							&:nth-child(7)::before {
+								content: "操作";							
+							}
+						}
+					}	
+				}
+				
+				
+		}
 	}
+
+	
 </style>
