@@ -128,6 +128,9 @@ export default {
     show() {
       this.visible = true;
     }
+  },
+  created() {
+	  window.addEventListener('resize', ()=>{ this.tableMinWidth = window.innerWidth > 900 ? '' : '1'});
   }
 };
 </script>

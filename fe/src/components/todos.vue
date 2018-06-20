@@ -191,6 +191,8 @@ export default {
 	},
 	created(){
 		this.todoList = new TodoList(todolistUrl);
+
+		window.addEventListener('resize', ()=>{ this.tableMinWidth = window.innerWidth > 900 ? '' : '1'});
 	},
 	mounted(){
 		 this.query = this.$refs.qd.generateQuery();
