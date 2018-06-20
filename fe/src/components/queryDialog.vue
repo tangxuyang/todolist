@@ -157,7 +157,7 @@ export default {
     }
   }
   .el-dialog--small {
-    width: 90%;
+    width: 90% !important;
   }
 }
 </style>
