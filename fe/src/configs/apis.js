@@ -16,5 +16,8 @@ export default {
 	},
 	"login":{
 		default:domain+"/login"
+	},
+	"userList": {
+		default: domain + "/users"
 	}
 };
