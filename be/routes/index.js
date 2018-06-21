@@ -100,7 +100,7 @@ router.get('/:id',function(req,res,next){
 	let id = new MongoClient.connect.ObjectID(req.params.id);
 	MongoClient.connect(url,function(err,db){
 		//console.log(MongoClient.connect.ObjectID);
-		db.collection('tasks').findOne({_id:id,userId:req.userInfo.id}).then(function(task){
+		db.collection('tasks').findOne({_id:id}).then(function(task){
 
 			//console.log(task);
 
