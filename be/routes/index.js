@@ -7,10 +7,11 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
 var url = config.mongodb;
+var auth = require('../middlewares/authentication');
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
 
   let pageIndex = +(req.query.pageIndex || 0);
   let pageSize = +(req.query.pageSize || 10);
@@ -114,7 +115,7 @@ router.get('/:id',function(req,res,next){
 });
 
 //新增数据
-router.post('/',function(req,res,next){
+router.post('/', auth, function(req,res,next){
 	//console.log(req.body);
 	//console.log(req.form);
 	//console.log(req.params);
@@ -148,7 +149,7 @@ router.post('/',function(req,res,next){
 });
 
 //更新数据
-router.put('/',function(req,res,next){
+router.put('/', auth, function(req,res,next){
 	//console.log(req.body);
 	let data = req.body;
 	let id = new MongoClient.connect.ObjectID(data._id);
@@ -165,7 +166,7 @@ router.put('/',function(req,res,next){
 });
 
 //删除数据
-router.delete('/:id',function(req,res,next){
+router.delete('/:id', auth, function(req,res,next){
 	let id = new MongoClient.connect.ObjectID(req.params.id);
 	MongoClient.connect(url,function(err,db){
 		db.collection('tasks').remove({_id:id,userId:req.userInfo.id}).then(function(){

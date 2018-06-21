@@ -40,7 +40,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 //app.use(auth);
 
-app.use('/todo', auth, index);
+// app.use('/todo', auth, index);
+app.use('/todo', index);
 app.use('/users', auth, users);
 app.use('/login', login);
 app.use('/tags', auth, tags);

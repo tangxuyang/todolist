@@ -10,6 +10,10 @@ export default class TodoList {
 		return Vue.request.get(this.todolistUrl,{params:params});
 	}
 
+	getTodo(id){
+		return Vue.request.get(this.todolistUrl + '/' + id);
+	}
+
 	deleteTodo(id){		
 		return Vue.request.delete(this.todolistUrl+'/'+id);
 	}	
