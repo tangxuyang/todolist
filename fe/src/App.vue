@@ -1,6 +1,5 @@
 <template>
-  <div id="app">   
-    <h1>任务列表</h1> 
+  <div id="app">       
     <router-view></router-view>
     <Login ref="login"/>
   </div>

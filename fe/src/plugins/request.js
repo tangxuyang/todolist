@@ -19,14 +19,14 @@ export default {
 					Vue.http[method].apply(Vue.http,_arguments).then(function(res){									
 						updateToken(res);
 						if(res.body.status == 1){//成功
-							resolve(res.body,res);
+							resolve(res.body, res);
 						}else if(res.body.status == 1100){//未登录
 							window.vueRoot && window.vueRoot.$children[0].login(function(){
 								Vue.request[method].apply(Vue,_arguments).then(resolve).catch(reject);//重试之前的请求
 							});
 							//reject(res);							
 						}else{//失败
-							reject(res);
+							reject(res.body, res);
 						}
 					},function(res){
 						updateToken(res);						
