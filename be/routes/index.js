@@ -116,10 +116,6 @@ router.get('/:id',function(req,res,next){
 
 //新增数据
 router.post('/', auth, function(req,res,next){
-	//console.log(req.body);
-	//console.log(req.form);
-	//console.log(req.params);
-	//console.log(req.query);
 	let data = req.body;
 	data.userId = req.userInfo.id;
 	delete data._id;
@@ -134,6 +130,7 @@ router.post('/', auth, function(req,res,next){
 			res.json({status:0,message:data.title+" 已经存在了！"});
 			db.close();
 		}else{
+			data.createTime = Date.now();
 			//3.原样插入不做任何处理	
 		  	db.collection('tasks').insertOne(data).then(function(result){
 		  		res.json({status:1,message:"success"});
@@ -154,6 +151,7 @@ router.put('/', auth, function(req,res,next){
 	let data = req.body;
 	let id = new MongoClient.connect.ObjectID(data._id);
 	delete data._id;
+	data.updateTime = Date.now();
 	MongoClient.connect(url,function(err,db){//1.连接数据库
 		db.collection('tasks').updateOne({_id:id,userId:req.userInfo.id},data).then(function(){
 			db.close();
