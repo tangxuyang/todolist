@@ -5,6 +5,12 @@ export default {
 	"todolist":{
 		default:domain +"/todo"
 	},
+	"voteList":{
+		default:domain +"/votes"
+	},
+	"voteRecordList":{
+		default:domain +"/voteRecords"
+	},
 	"todo":{
 		default:domain + "/todo"
 	},

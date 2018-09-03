@@ -63,6 +63,7 @@
 						@click="deleteItem(scope.row)">
 						删除
 					</el-button>
+					<a :href="'/todo/' + scope.row._id">查看</a>
 				</template>
 			</el-table-column>
 		</el-table>	

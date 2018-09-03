@@ -5,6 +5,8 @@ import Token from '@/components/token'
 import AddUser from '@/components/addUser'
 //5b0e8192d0e8ae1e8dcdd14c
 import Todo from '@/components/todo'
+import Votes from '@/components/votes'
+import VoteRecords from '@/components/voteRecords'
 
 Vue.use(Router)
 
@@ -26,6 +28,14 @@ export default new Router({
       path: '/todo/:id',
       name: 'todo',
       component: Todo
+    },{
+      path: '/votes',
+      name: 'votes',
+      component: Votes
+    },{
+      path: '/voterecords',
+      name: 'voterecords',
+      component: VoteRecords
     }
   ]
 })

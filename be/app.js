@@ -9,6 +9,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var tags = require('./routes/tags');
 var login = require('./routes/login');
+var votes = require('./routes/votes');
+var voteRecords = require('./routes/voteRecords');
 var cors = require('cors');
 var auth = require('./middlewares/authentication');
 
@@ -45,6 +47,8 @@ app.use('/todo', index);
 app.use('/users', auth, users);
 app.use('/login', login);
 app.use('/tags', auth, tags);
+app.use('/votes', votes);
+app.use('/voteRecords', voteRecords);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
