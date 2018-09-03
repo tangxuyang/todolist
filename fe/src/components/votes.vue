@@ -73,6 +73,8 @@ export default {
 		this.voteList = new VoteList(voteListUrl);
 
 		window.addEventListener('resize', ()=>{ this.tableMinWidth = window.innerWidth > 900 ? '' : '1'});
+
+        this.refresh();
 	},
 	mounted(){
 		 	 
