@@ -34,7 +34,7 @@
 			</el-table-column>
 			<el-table-column label="操作">
 				<template scope="scope">
-					<a :href="'/voteRecords/' + scope.row._id">投票记录</a>
+					<e-button type="primarry" size="small" @click="gotoRecords(scope.row._id)">投票记录</e-button>
 				</template>
 			</el-table-column>
 		</el-table>	
@@ -103,7 +103,15 @@ export default {
 			 	self.items = data.data.votes;
 			 	self.total = data.data.total;
 			 });
-		}		
+        },
+        gotoRecords(id) {
+            this.$router.push({
+                name: "voterecords",
+                params: {
+                    id: id
+                }
+            });
+        }	
 	}
 }
 </script>

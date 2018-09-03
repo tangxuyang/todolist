@@ -33,7 +33,7 @@ export default new Router({
       name: 'votes',
       component: Votes
     },{
-      path: '/voterecords',
+      path: '/voterecords/:id',
       name: 'voterecords',
       component: VoteRecords
     }
