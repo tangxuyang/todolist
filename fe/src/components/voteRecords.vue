@@ -42,8 +42,8 @@ let voteListUrl = apiUrls.voteList['default'];
 
 
 import Vote from '@/models/Vote';
-import Record from '@/models/Record';
-import RecordList from '@/models/RecordList';
+import Record from '@/models/VoteRecord';
+import RecordList from '@/models/VoteRecordList';
 import VoteList from '@/models/VoteList';
 
 
