@@ -70,7 +70,7 @@ export default {
 		};
 	},
 	created(){
-		this.voteList = new voteList(voteListUrl);
+		this.voteList = new VoteList(voteListUrl);
 
 		window.addEventListener('resize', ()=>{ this.tableMinWidth = window.innerWidth > 900 ? '' : '1'});
 	},
