@@ -63,7 +63,7 @@
 						@click="deleteItem(scope.row)">
 						删除
 					</el-button>
-					<a :href="'/todo/' + scope.row._id">查看</a>
+					<a href="javascript:;" @click="gotoDetail(scope.item)">查看</a>
 				</template>
 			</el-table-column>
 		</el-table>	
@@ -294,7 +294,10 @@ export default {
 		queryChanged(query){
 			this.query = query;
 			this.refresh();
-		}		
+		},
+		gotoDetail(item) {
+			this.$router.push('/todo/' + item._id);
+		}
 	}
 }
 </script>
