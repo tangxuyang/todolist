@@ -8,7 +8,7 @@ export default {
 
 		function updateToken(res){
 			let token = res && res.headers && res.headers.get('token');			
-			window.localStorage.token = token;
+			token && (window.localStorage.token = token);
 		}
 
 		methods.forEach(function(method){
