@@ -63,7 +63,7 @@
 						@click="deleteItem(scope.row)">
 						删除
 					</el-button>
-					<a href="javascript:;" @click="gotoDetail(scope.item)">查看</a>
+					<a href="javascript:;" @click="gotoDetail(scope.row)">查看:)</a>
 				</template>
 			</el-table-column>
 		</el-table>	
